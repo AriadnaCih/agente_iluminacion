@@ -249,6 +249,35 @@ def crear_regla(agente: AgenteIluminacion) -> None:
     except Exception as e:
         print(f"[ERROR] No se pudo crear la regla: {e}")
 
+def eliminar_regla(agente: AgenteIluminacion) -> None:
+    """Permite al usuario seleccionar y eliminar una regla del motor de inferencia."""
+    reglas = agente.motor.obtener_reglas_ordenadas()
+    if not reglas:
+        print("\n[INFO] No hay reglas para eliminar.")
+        return
+
+    print("\n" + "="*60)
+    print("ELIMINAR REGLA")
+    print("="*60)
+    for idx, regla in enumerate(reglas, 1):
+        print(f"{idx}. [{regla.prioridad}/10] {regla.nombre}")
+
+    try:
+        seleccion = int(input("Selecciona el número de la regla a eliminar (0 para cancelar): ").strip())
+    except ValueError:
+        print("[ERROR] Ingresa un número válido.")
+        return
+
+    if seleccion == 0:
+        print("Operación cancelada.")
+        return
+
+    if agente.motor.eliminar_regla_por_indice(seleccion):
+        print(f"\n[OK] Regla eliminada (posición {seleccion}).")
+    else:
+        print("[ERROR] Índice no válido. No se eliminó ninguna regla.")
+
+
 def mostrar_menu() -> str:
     """Muestra el menú principal y retorna la opción seleccionada."""
     print("\n" + "="*60)
@@ -256,10 +285,11 @@ def mostrar_menu() -> str:
     print("="*60)
     print("1. Ver reglas existentes")
     print("2. Crear nueva regla")
-    print("3. Procesar percepción")
-    print("4. Salir")
+    print("3. Eliminar regla")
+    print("4. Procesar percepción")
+    print("5. Salir")
     print("="*60)
-    return input("Selecciona una opción (1-4): ").strip()
+    return input("Selecciona una opción (1-5): ").strip()
 
 def main() -> None:
     agente = AgenteIluminacion()
@@ -274,6 +304,9 @@ def main() -> None:
             crear_regla(agente)
         
         elif opcion == "3":
+            eliminar_regla(agente)
+
+        elif opcion == "4":
             percepcion = obtener_datos()
             
             if percepcion is not None:
@@ -283,7 +316,7 @@ def main() -> None:
                 accion = agente.decidir_accion(percepcion)
                 accion.ejecutar()
         
-        elif opcion == "4":
+        elif opcion == "5":
             print("\n¡Adios!")
             break
         

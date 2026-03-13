@@ -89,6 +89,34 @@ class MotorInferencia:
             print(f"{idx}. [{regla.prioridad}/10] {regla.nombre}")
         print(f"{'='*60}\n")
 
+        # Devolver la lista ordenada para usos posteriores
+        return reglas_ordenadas
+
+    def obtener_reglas_ordenadas(self) -> List[Regla]:
+        """Retorna las reglas ordenadas por prioridad (mayor primero)."""
+        return sorted(self.reglas, key=lambda r: r.prioridad, reverse=True)
+
+    def eliminar_regla_por_indice(self, indice: int) -> bool:
+        """Elimina la regla en la posición (1-based) según la lista ordenada.
+
+        Retorna True si se eliminó correctamente, False si el índice no es válido.
+        """
+        reglas_ordenadas = self.obtener_reglas_ordenadas()
+        if indice < 1 or indice > len(reglas_ordenadas):
+            return False
+
+        regla_a_eliminar = reglas_ordenadas[indice - 1]
+        self.reglas = [r for r in self.reglas if r is not regla_a_eliminar]
+        return True
+
+    def eliminar_regla_por_nombre(self, nombre: str) -> bool:
+        """Elimina la primera regla que coincida exactamente con el nombre dado."""
+        for regla in self.reglas:
+            if regla.nombre == nombre:
+                self.reglas.remove(regla)
+                return True
+        return False
+
     def evaluar(self, p: Percepcion) -> Accion:
 
         if p is None or not hasattr(p, "intensidad_actual"):

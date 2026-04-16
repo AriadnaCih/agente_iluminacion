@@ -3,25 +3,32 @@ import random
 # =========================
 # TABLA CPD
 # =========================
+import random
+
 cpd = {
     ("Si", "Baja", "Nocturna"): {
         "Encender": 0.9,
         "Ajustar": 0.1,
         "Apagar": 0.0
     },
+    ("Si", "Baja", "Diurna"): {
+        "Encender": 0.7,
+        "Ajustar": 0.2,
+        "Apagar": 0.1
+    },
     ("Si", "Media", "Nocturna"): {
         "Encender": 0.4,
         "Ajustar": 0.5,
         "Apagar": 0.1
     },
-    ("Si", "Alta", "Diurna"): {
-        "Encender": 0.1,
-        "Ajustar": 0.3,
-        "Apagar": 0.6
+    ("Si", "Media", "Diurna"): {
+        "Encender": 0.2,
+        "Ajustar": 0.6,
+        "Apagar": 0.2
     },
-    ("No", "Baja", "Nocturna"): {
-        "Encender": 0.05,
-        "Ajustar": 0.05,
+    ("No", "Alta", "Diurna"): {
+        "Encender": 0.0,
+        "Ajustar": 0.1,
         "Apagar": 0.9
     },
     ("No", "Media", "Diurna"): {
@@ -29,9 +36,9 @@ cpd = {
         "Ajustar": 0.2,
         "Apagar": 0.8
     },
-    ("No", "Alta", "Diurna"): {
-        "Encender": 0.0,
-        "Ajustar": 0.1,
+    ("No", "Baja", "Nocturna"): {
+        "Encender": 0.05,
+        "Ajustar": 0.05,
         "Apagar": 0.9
     }
 }

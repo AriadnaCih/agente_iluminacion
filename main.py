@@ -287,7 +287,7 @@ def mostrar_menu() -> str:
     print("2. Crear nueva regla")
     print("3. Eliminar regla")
     print("4. Procesar percepción")
-    print("5. Procesar percepción usando solo CPD")
+    print("5. Procesar percepción usando solo CPD (probabilístico)")
     print("6. Salir")
     print("="*60)
     return input("Selecciona una opción (1-6): ").strip()

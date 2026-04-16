@@ -137,5 +137,4 @@ class MotorInferencia:
                 return accion
 
        
-        intensidad = getattr(p, "intensidad_actual", 0)
-        return Accion("MANTENER", intensidad if isinstance(intensidad, int) else 0) 
+        return None

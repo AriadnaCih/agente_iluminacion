@@ -287,9 +287,23 @@ def mostrar_menu() -> str:
     print("2. Crear nueva regla")
     print("3. Eliminar regla")
     print("4. Procesar percepción")
-    print("5. Salir")
+    print("5. Procesar percepción usando solo CPD")
+    print("6. Salir")
     print("="*60)
-    return input("Selecciona una opción (1-5): ").strip()
+    return input("Selecciona una opción (1-6): ").strip()
+
+
+def procesar_percepcion(agente: AgenteIluminacion, usar_cpd_only: bool = False) -> None:
+    percepcion = obtener_datos()
+    if percepcion is None:
+        return
+
+    print(f"  Luz: {percepcion.luz_natural} lux | Presencia: {'Sí' if percepcion.presencia else 'No'} | Hora: {percepcion.hora_tipo} | Intensidad: {percepcion.intensidad_actual}%")
+    print()
+
+    accion = agente.decidir_accion(percepcion, usar_cpd_only=usar_cpd_only)
+    accion.ejecutar()
+
 
 def main() -> None:
     agente = AgenteIluminacion()
@@ -307,19 +321,15 @@ def main() -> None:
             eliminar_regla(agente)
 
         elif opcion == "4":
-            percepcion = obtener_datos()
-            
-            if percepcion is not None:
-                print(f"  Luz: {percepcion.luz_natural} lux | Presencia: {'Sí' if percepcion.presencia else 'No'} | Hora: {percepcion.hora_tipo} | Intensidad: {percepcion.intensidad_actual}%")
-                print()
-                
-                accion = agente.decidir_accion(percepcion)
-                accion.ejecutar()
-        
+            procesar_percepcion(agente, usar_cpd_only=False)
+
         elif opcion == "5":
+            procesar_percepcion(agente, usar_cpd_only=True)
+
+        elif opcion == "6":
             print("\n¡Adios!")
             break
-        
+
         else:
             print("[ERROR] Opción no válida. Intenta de nuevo.")
 
